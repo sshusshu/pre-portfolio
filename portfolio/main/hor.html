@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+  *{margin: 0;padding: 0;}
+	.slide{width: 100vw;height: 100vh;}
+	.wrapper{display:flex;flex-direction:row;width:400vw;
+	transform:rotate(90deg) translateY(-100vh);
+	transform-origin:top left;}
+	.one{background:#999}
+	.two{background:#888}
+	.three{background:#777}
+	.four{background:#666}
+	.outer_wrapper{
+	width: 100vh;height: 100vw;
+	transform:rotate(-90deg) translateX(-100vh);
+	transform-origin:top left;
+	overflow-y: scroll ;
+	overflow-x: hidden;
+	position: absolute;
+	}
+  </style>
+ </head>
+ <body>
+ <div class="outer_wrapper">
+	<div class="wrapper">
+		<div class="slide one"></div>
+		<div class="slide two"></div>
+		<div class="slide three"></div>
+		<div class="slide four"></div>
+	</div>
+ </div>
+ </body>
+</html>

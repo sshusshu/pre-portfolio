@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <link href="https://fonts.googleapis.com/css2?family=Sen&display=swap" rel="stylesheet">
+  <title>Document</title>
+ <style>
+ #wrap{position: absolute;top: 30%;left: 50%;transform:translate(-50%,-50%)}
+ input{width:60px}
+ table{border:5px solid #999;border-collapse:collapse;margin-top: 50px;box-shadow:10px 10px 0px rgba(0,0,0,0.1)}
+	td { 
+		font-family: 'Sen', sans-serif;
+		color:#666;
+		font-weight: bold;
+		width: 20px;
+		height: 20px;
+		border:1px solid #fff;
+		text-align: center;
+		background: #666;
+		box-shadow:inset 4px 4px 0 rgba(0,0,0,0.1);
+	}
+	td.opened{background: #fff;}
+	td.exc{background:#FFA8A8;}
+	td.que{background:#C6ACFF;}
+#result{text-align: center;font-size: 1.6em;font-weight: bold;text-transform: uppercase;
+		font-family: 'Sen', sans-serif;color:#FF8787;margin-top: 20px;}
+ .CodeMirror {
+    width: 50%;
+	height:40% !important;
+    position: absolute !important;
+    bottom: 10%;
+    left: 25%
+}
+
+@media (max-width:1024px){
+	#wrap {
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    transform: translate(0%,0%);
+	
+}
+ input{width:200px;height:30px;font-size: 2em;}
+	td { 
+	
+		width: 60px;
+		height: 60px;
+		
+	}
+	button{width: 150px;height: 30px;text-align: center;line-height: 30px;font-size: 2em;}
+.CodeMirror {
+    width: 100%;
+    position: absolute !important;
+    bottom: 0%;
+    left: 0%
+}
+}	
+ </style>
+ </head>
+ <body>
+  <div id="wrap">
+	  <input id='hor' type="number" value='10' placeholder='가로칸'>
+	  <input id='ver' type="number" value='10' placeholder='세로칸'>
+	  <input id='mine' type="number" value='20' placeholder='지뢰수'>
+	  <button id='btn'>제출</button>
+	  <table id= 'table'>
+			<thead></thead>
+			<tbody></tbody>
+	  </table>	
+	  <div id="result"></div>
+  </div><textarea class="code">
+	//지뢰찾기
+	let btn = document.querySelector('#btn');
+	let result = document.querySelector('#result');
+	let tbody = document.querySelector('#table tbody');
+	let dataset = [];
+	let stop = false;
+	let openTd =0;
+
+	btn.addEventListener('click',function(e){
+		//초기화
+		e.preventDefault();
+		tbody.innerHTML='';
+		dataset =[];
+		stop = false;
+		result.textContent ='';
+
+			let hor = document.querySelector('#hor').value;
+			let ver = document.querySelector('#ver').value;
+			let mine = document.querySelector('#mine').value;
+		
+		//테이블제작
+		for (let i=0; i< ver ; i++){
+			let tr = document.createElement('tr');
+			let arr =[];
+			dataset.push(arr)
+			for (let j =0; j< hor ;j++ ){
+				let td = document.createElement('td');
+				td.addEventListener('contextmenu',function(e){
+					e.currentTarget.classList.add('opened');
+					if(stop){
+						return;
+					}
+					e.preventDefault();
+					let flag = e.currentTarget;
+					let e_tr = e.currentTarget.parentNode;
+					let e_tbody = e.currentTarget.parentNode.parentNode;
+					let tr_idx = Array.prototype.indexOf.call(e_tbody.children,e_tr);
+					let td_idx = Array.prototype.indexOf.call(e_tr.children,e.currentTarget);
+
+					if(flag.textContent === ''||flag.textContent === 'X'){
+						flag.textContent = '!';
+						e.currentTarget.classList.add('exc');
+					}else if(flag.textContent === '!'){
+						flag.textContent = '?'
+						e.currentTarget.classList.add('que');
+					}else if(flag.textContent === '?'){
+						if(dataset[tr_idx][td_idx] ==='X'){
+							e.currentTarget.classList.remove('exc');
+							e.currentTarget.classList.remove('que');
+							e.currentTarget.classList.remove('opened');
+							flag.textContent = 'X';
+						}else{
+							flag.textContent = '';
+							e.currentTarget.classList.remove('exc');
+							e.currentTarget.classList.remove('que');
+							e.currentTarget.classList.remove('opened');
+						}
+					}
+				})
+				td.addEventListener('click',function(e){
+					if(stop){
+						return;
+					}
+					let e_tr = e.currentTarget.parentNode;
+					let e_tbody = e.currentTarget.parentNode.parentNode;
+					let tr_idx = Array.prototype.indexOf.call(e_tbody.children,e_tr);
+					let td_idx = Array.prototype.indexOf.call(e_tr.children,e.currentTarget);
+					
+					if(dataset[tr_idx][td_idx] === 1){
+						return;
+					 }
+					//클릭하면 배경
+					
+					e.currentTarget.classList.add('opened');
+					openTd += 1;
+
+					if(dataset[tr_idx][td_idx] ==='X'){
+						e.currentTarget.textContent = '펑';
+						result.textContent ='lose';
+						stop = true;
+					}else{ 	 
+						dataset[tr_idx][td_idx] = 1;
+						//주변지뢰개수
+						let around = [dataset[tr_idx][td_idx-1],dataset[tr_idx][td_idx+1]]
+						if(dataset[tr_idx-1]){
+							around = around.concat([dataset[tr_idx-1][td_idx-1],dataset[tr_idx-1][td_idx],dataset[tr_idx-1][td_idx+1]])
+							}
+						if(dataset[tr_idx+1]){
+							around = around.concat([dataset[tr_idx+1][td_idx-1],dataset[tr_idx+1][td_idx],dataset[tr_idx+1][td_idx+1]])
+							}						
+						let aroundMine = around.filter(function(v){
+							return v === 'X';
+						}).length;
+						if(aroundMine ===0 ){
+							e.currentTarget.textContent = '' ;
+						}else{
+							e.currentTarget.textContent = aroundMine ;	
+						}
+						
+						// 0개일때 주변칸열기
+						if(aroundMine === 0){
+							let aroundTd =[
+							tbody.children[tr_idx].children[td_idx-1],tbody.children[tr_idx].children[td_idx+1]
+							];
+							if(tbody.children[tr_idx-1]){
+								aroundTd = aroundTd.concat([
+								tbody.children[tr_idx-1].children[td_idx-1],tbody.children[tr_idx-1].children[td_idx],tbody.children[tr_idx-1].children[td_idx+1]
+								])	
+							}
+							if(tbody.children[tr_idx+1]){
+								aroundTd = aroundTd.concat([
+								tbody.children[tr_idx+1].children[td_idx-1],tbody.children[tr_idx+1].children[td_idx],tbody.children[tr_idx+1].children[td_idx+1]
+								])	
+							}
+							aroundTd.filter(function(v){
+								return !! v 
+							}).forEach(function(e){	
+								let e_tr = e.parentNode;
+								let e_tbody = e.parentNode.parentNode;
+								let tr_idx = Array.prototype.indexOf.call(e_tbody.children,e_tr);
+								let td_idx = Array.prototype.indexOf.call(e_tr.children,e);
+								if(dataset[tr_idx][td_idx] !== 1)
+								e.click();
+							})
+						}
+						console.log(openTd,hor*ver-mine)
+						if(openTd === hor*ver-mine){
+							result.textContent ='win';
+							stop=true;
+						}
+					}
+				})
+				arr.push(0);
+				tr.appendChild(td);
+			}
+			tbody.appendChild(tr);
+		}
+		//지뢰제작
+		let numbers = Array(hor*ver).fill().map(function(a,index){
+			return index;
+		})
+		let shuffles=[];
+		while(numbers.length > hor*ver-mine){	
+			var a = numbers.splice(Math.floor(Math.random()*numbers.length),1)[0];
+			shuffles.push(a);
+		}
+		console.log(shuffles);
+		//지뢰심기
+		for (let i = 0; i< mine ; i++ ){ // 4 
+			let tens = Math.floor(shuffles[i] / ver)  // 6번째줄 5
+			let ones = shuffles[i] % ver // 8번째칸 7
+			tbody.children[tens].children[ones].textContent ='X';
+			dataset[tens][ones] ='X';
+		}
+	})
+</textarea>
+<script src="js/jquery.min_1.12.4.js"></script>
+<script src="js/codemirror.js"></script>
+<link rel="stylesheet" href="css/codemirror.css">
+<link rel="stylesheet" href="css/blackboard.css">
+<script src="js/javascript.js"></script>
+
+<script>
+ var code = $(".code")[0];
+ var editor = CodeMirror.fromTextArea(code, {
+	lineWrapping:true,
+    lineNumbers: true,
+	theme: "blackboard",
+	tabSize:6,
+  });
+//지뢰찾기
+	let btn = document.querySelector('#btn');
+	let result = document.querySelector('#result');
+	let tbody = document.querySelector('#table tbody');
+	let dataset = [];
+	let stop = false;
+	let openTd =0;
+
+	btn.addEventListener('click',function(e){
+		//초기화
+		e.preventDefault();
+		tbody.innerHTML='';
+		dataset =[];
+		stop = false;
+		result.textContent ='';
+
+			let hor = document.querySelector('#hor').value;
+			let ver = document.querySelector('#ver').value;
+			let mine = document.querySelector('#mine').value;
+		
+		//테이블제작
+		for (let i=0; i< ver ; i++){
+			let tr = document.createElement('tr');
+			let arr =[];
+			dataset.push(arr)
+			for (let j =0; j< hor ;j++ ){
+				let td = document.createElement('td');
+				td.addEventListener('contextmenu',function(e){
+					e.currentTarget.classList.add('opened');
+					if(stop){
+						return;
+					}
+					e.preventDefault();
+					let flag = e.currentTarget;
+					let e_tr = e.currentTarget.parentNode;
+					let e_tbody = e.currentTarget.parentNode.parentNode;
+					let tr_idx = Array.prototype.indexOf.call(e_tbody.children,e_tr);
+					let td_idx = Array.prototype.indexOf.call(e_tr.children,e.currentTarget);
+
+					if(flag.textContent === ''||flag.textContent === 'X'){
+						flag.textContent = '!';
+						e.currentTarget.classList.add('exc');
+					}else if(flag.textContent === '!'){
+						flag.textContent = '?'
+						e.currentTarget.classList.add('que');
+					}else if(flag.textContent === '?'){
+						if(dataset[tr_idx][td_idx] ==='X'){
+							e.currentTarget.classList.remove('exc');
+							e.currentTarget.classList.remove('que');
+							e.currentTarget.classList.remove('opened');
+							flag.textContent = 'X';
+						}else{
+							flag.textContent = '';
+							e.currentTarget.classList.remove('exc');
+							e.currentTarget.classList.remove('que');
+							e.currentTarget.classList.remove('opened');
+						}
+					}
+				})
+				td.addEventListener('click',function(e){
+					if(stop){
+						return;
+					}
+					let e_tr = e.currentTarget.parentNode;
+					let e_tbody = e.currentTarget.parentNode.parentNode;
+					let tr_idx = Array.prototype.indexOf.call(e_tbody.children,e_tr);
+					let td_idx = Array.prototype.indexOf.call(e_tr.children,e.currentTarget);
+					
+					if(dataset[tr_idx][td_idx] === 1){
+						return;
+					 }
+					//클릭하면 배경
+					
+					e.currentTarget.classList.add('opened');
+					openTd += 1;
+
+					if(dataset[tr_idx][td_idx] ==='X'){
+						e.currentTarget.textContent = '펑';
+						result.textContent ='lose';
+						stop = true;
+					}else{ 	 
+						dataset[tr_idx][td_idx] = 1;
+						//주변지뢰개수
+						let around = [dataset[tr_idx][td_idx-1],dataset[tr_idx][td_idx+1]]
+						if(dataset[tr_idx-1]){
+							around = around.concat([dataset[tr_idx-1][td_idx-1],dataset[tr_idx-1][td_idx],dataset[tr_idx-1][td_idx+1]])
+							}
+						if(dataset[tr_idx+1]){
+							around = around.concat([dataset[tr_idx+1][td_idx-1],dataset[tr_idx+1][td_idx],dataset[tr_idx+1][td_idx+1]])
+							}						
+						let aroundMine = around.filter(function(v){
+							return v === 'X';
+						}).length;
+						if(aroundMine ===0 ){
+							e.currentTarget.textContent = '' ;
+						}else{
+							e.currentTarget.textContent = aroundMine ;	
+						}
+						
+						// 0개일때 주변칸열기
+						if(aroundMine === 0){
+							let aroundTd =[
+							tbody.children[tr_idx].children[td_idx-1],tbody.children[tr_idx].children[td_idx+1]
+							];
+							if(tbody.children[tr_idx-1]){
+								aroundTd = aroundTd.concat([
+								tbody.children[tr_idx-1].children[td_idx-1],tbody.children[tr_idx-1].children[td_idx],tbody.children[tr_idx-1].children[td_idx+1]
+								])	
+							}
+							if(tbody.children[tr_idx+1]){
+								aroundTd = aroundTd.concat([
+								tbody.children[tr_idx+1].children[td_idx-1],tbody.children[tr_idx+1].children[td_idx],tbody.children[tr_idx+1].children[td_idx+1]
+								])	
+							}
+							aroundTd.filter(function(v){
+								return !! v 
+							}).forEach(function(e){	
+								let e_tr = e.parentNode;
+								let e_tbody = e.parentNode.parentNode;
+								let tr_idx = Array.prototype.indexOf.call(e_tbody.children,e_tr);
+								let td_idx = Array.prototype.indexOf.call(e_tr.children,e);
+								if(dataset[tr_idx][td_idx] !== 1)
+								e.click();
+							})
+						}
+						console.log(openTd,hor*ver-mine)
+						if(openTd === hor*ver-mine){
+							result.textContent ='win';
+							stop=true;
+						}
+					}
+				})
+				arr.push(0);
+				tr.appendChild(td);
+			}
+			tbody.appendChild(tr);
+		}
+		//지뢰제작
+		let numbers = Array(hor*ver).fill().map(function(a,index){
+			return index;
+		})
+		let shuffles=[];
+		while(numbers.length > hor*ver-mine){	
+			var a = numbers.splice(Math.floor(Math.random()*numbers.length),1)[0];
+			shuffles.push(a);
+		}
+		console.log(shuffles);
+		//지뢰심기
+		for (let i = 0; i< mine ; i++ ){ // 4 
+			let tens = Math.floor(shuffles[i] / ver)  // 6번째줄 5
+			let ones = shuffles[i] % ver // 8번째칸 7
+			tbody.children[tens].children[ones].textContent ='X';
+			dataset[tens][ones] ='X';
+		}
+	})
+
+  </script>
+ </body>
+</html>

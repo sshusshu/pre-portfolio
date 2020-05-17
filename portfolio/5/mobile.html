@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>mobile</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css"> 
+	<link rel="stylesheet" type="text/css" href="css/slick.css"/>  
+	
+<script src="js/jquery.min_1.12.4.js"></script>
+<script src="js/slick.min.js"></script>
+
+ </head>
+ <body>
+<header id="header">
+    <div class="header">
+		<button class="nav_btn"></button>
+		<h1 class="logo">
+			<a href="">
+				<img src="img/hdr_logo.png" alt="sivillage logo">
+			</a>
+		</h1>
+		<button class="search"></button>
+		<button class="cart"></button>
+    </div>
+	<nav id="nav">
+		<div class="nav">
+			<ul>
+				<li class="on"><a href=""><span>홈</span></a></li>
+				<li><a href=""><span>이벤트</span></a></li>
+				<li><a href=""><span>매거진</span></a></li>
+				<li><a href=""><span>셀렉트449</span></a></li>
+				<li><a href=""><span>아울렛</span></a></li>
+			</ul>
+		</div>
+	</nav>
+</header>
+	<main>
+		<div class="main_bnr">
+			<ul>
+				<li>
+					<a href="">
+					<img src="http://image.sivillage.com/upload/C00001/dspl/banner/90/675/200400000059675.jpg?RS=600&SP=1" alt="폴스미스 DAY, 단 이틀간 타임특가!">
+					<div class="main_desc">
+						<strong>폴스미스 DAY, 단 이틀간 타임특가!</strong>
+						<span>신상품 최대 30% OFF / 아울렛 한정기간 추가인하</span>
+					</div>
+					</a>
+				</li>
+				<li>
+					<a href="">
+					<img src="http://image.sivillage.com/upload/C00001/dspl/banner/1010/125/30/200400000059125.jpg?cVer=04100557&RS=600&SP=1" alt="니치 퍼퓸 브랜드 최대 30% + 장바구니 쿠폰 10%">
+					<div class="main_desc">
+						<strong>선물받고 싶은 향기</strong>
+						<span>니치 퍼퓸 브랜드 최대 30% + 장바구니 쿠폰 10%</span>
+					</div>
+					</a>
+				</li>
+				<li>
+					<a href="">
+					<img src="http://image.sivillage.com/upload/C00001/dspl/banner/1010/521/30/200400000058521.jpg?cVer=29095948&RS=600&SP=1" alt="">
+					<div class="main_desc">
+						<strong>20 S/S SEASON OFF</strong>
+						<span>UP TO 30%</span>
+					</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script>
+			$('.main_bnr ul').slick();
+		</script>
+		<div class="cate_nav">
+			<div class="inner">
+				<ul>
+					<li><a href=""><em></em>여성패션</a></li>
+					<li><a href=""><em></em>남성패션</a></li>
+					<li><a href=""><em></em>잡화</a></li>
+					<li><a href=""><em></em>아동</a></li>
+					<li><a href=""><em></em>뷰티</a></li>
+					<li><a href=""><em></em>생활</a></li>
+					<li><a href=""><em></em>가구</a></li>
+				</ul>	
+			</div>
+		</div>
+		<section class="hot">
+		<div class="inTitle">
+			<h2>HOT #KEYWORDS</h2>
+		</div>	
+		    <div class="keyword">
+				<ul>
+					<li><a href="">#선물하고 싶은 향기, 니치 향수 ~30% OFF</a></li>
+					<li><a href="">#10MONTH와 함게 물드는 여름</a></li>
+					<li><a href="">디자인 유나이티드 최대 60% 할인 + 페이백 20%</a></li>
+				</ul>
+		    </div>		
+		</section>
+		<script>
+			$('.keyword ul').slick({
+				  slidesToShow: 1,
+				  variableWidth: true,
+				  infinite:false,
+				});
+		</script>
+		<section class="sub_bnr">
+		    <h3 class="ir_su">서브배너</h3>
+				<ul>
+					<li><a href=""><img src="http://image.sivillage.com/upload/C00001/dspl/banner/99/731/200400000059731.jpg?RS=600&SP=1" alt=""></a></li>
+					<li><a href=""><img src="http://image.sivillage.com/upload/C00001/dspl/banner/99/818/200400000059818.jpg?RS=600&SP=1" alt=""></a></li>
+					<li><a href=""><img src="http://image.sivillage.com/upload/C00001/dspl/banner/99/728/200400000059728.jpg?RS=600&SP=1" alt=""></a></li>
+				</ul>
+		</section>
+		<script>
+			$('.sub_bnr ul').slick();
+		</script>
+		<section class="best">
+			<div class="inTitle">
+				<h2>BEST SELLING</h2>
+			</div>
+			<div class="best_nav">
+				<ul>
+					<li class="on"><a href="">여성패션</a></li>
+					<li><a href="">남성패션</a></li>
+					<li><a href="">잡화</a></li>
+					<li><a href="">아동</a></li>
+					<li><a href="">뷰티</a></li>
+					<li><a href="">생활</a></li>
+					<li><a href="">가구/인테리어</a></li>
+				</ul>
+			</div>
+			<script>
+				$('.best_nav ul').slick({
+				  slidesToShow: 1,
+				  variableWidth: true,
+				  infinite:false,
+				});
+			</script>
+			<div class="best_item">
+				<ul class="on">
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<span class="number">1</span>
+							<img src="http://image.sivillage.com/upload/C00001/goods/org/718/200323000638718.jpg?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">EMPORIO ARMANI(U)</strong>
+							<span class="name">퍼 카라 포인트 카반 자켓</span>
+							<span class="price">
+								<em>5,970,000원</em>
+								<span class="sale_price">/ 2985,000원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<span class="number">2</span>
+							<img src="http://image.sivillage.com/upload/C00001/goods/org/289/200204000566289.jpg?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">COMODO</strong>
+							<span class="name">[CASUAL]365팬츠</span>
+							<span class="price">
+								<em>139,000원</em>	
+								<span class="sale_price"> 70,050원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<span class="number">3</span>
+							<img src="http://image.sivillage.com/upload/C00001/goods/org/324/200207000572324.jpg?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">COMODO</strong>
+							<span class="name">[CASUAL]365팬츠</span>
+							<span class="price">
+								<em>139,000원</em>
+								<span class="sale_price">/ 70,050원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<span class="number">1</span>
+							<img src="http://image.sivillage.com/upload/C00001/goods/org/662/190624000336662.jpg?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">EMPORIO ARMANI(U)</strong>
+							<span class="name">퍼 카라 포인트 카반 자켓</span>
+							<span class="price">
+								<em>5,970,000원</em>
+								<span class="sale_price">/ 2985,000원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<span class="number">2</span>
+							<img src="http://image.sivillage.com/upload/C00001/goods/org/237/200318000631237.jpg?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">COMODO</strong>
+							<span class="name">[CASUAL]365팬츠</span>
+							<span class="price">
+								<em>139,000원</em>	
+								<span class="sale_price"> 70,050원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<span class="number">3</span>
+							<img src="http://image.sivillage.com/upload/C00001/goods/org/243/200318000631243.jpg?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">COMODO</strong>
+							<span class="name">[CASUAL]365팬츠</span>
+							<span class="price">
+								<em>139,000원</em>
+								<span class="sale_price">/ 70,050원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<script>
+				var best_nav = $('.best_nav ul li'),
+				best_item = $('.best_item ul');
+
+				 best_nav.click(function(e){
+					e.preventDefault();
+					var index= $(this).index();
+					best_item.removeClass('on');
+					best_item.eq(index).addClass('on');	
+					best_nav.removeClass('on');
+					$(this).addClass('on');
+			
+			console.log(best_nav)
+				})
+				$('.best_item ul').slick({ 
+					slidesToShow: 1,
+					  variableWidth: true
+				});
+			</script> 
+		</section>
+		<section class="week">
+		<div class="inTitle">	
+			<h2>THIS WEEK!</h2>
+		</div>
+		<div class="week_event">
+			<a href="">
+				<div class="week_img">
+					<img src="http://image.sivillage.com/upload/C00001/dspl/banner/1010/531/30/200400000058531.jpg?cVer=21020309&RS=600&SP=1" alt="">
+				</div>
+				<h3>MAN ON THE BOON</h3>
+				<div class="week_desc">
+					<strong>LAST CHANCE!</strong>
+					<span>소량 재고 추가인하!</span>
+				</div>
+			</a>
+		</div>
+		<div class="week_event">
+			<a href="">
+				<div class="week_img">
+					<img src="http://image.sivillage.com/upload/C00001/dspl/banner/1010/046/30/200400000058046.jpg?cVer=29124840&RS=600&SP=1" alt="">
+				</div>
+				<h3>DEAR MILLIM</h3>
+				<div class="week_desc">
+					<strong>디어밀림 뉴론칭 ★ 단독 20%할인</strong>
+					<span>인테리어 소품으로까지, 안전한 키즈 피규어</span>
+				</div>
+			</a>
+		</div>
+		</section>
+		<section class="sale">
+			<h4>
+				<a href="">
+					<img src="http://image.sivillage.com/upload/C00001/hall/brndHall/mc_LA_PERVA__1502976871651.jpg?RS=400&SP=1" alt="sale">
+				</a>
+			</h4>
+			<div class="sale_set">
+				<ul>
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<img src="http://image.sivillage.com/upload/C00001/files/product/01/P0000/11/59/46/01P0000115946.jpg?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">LA PERVA</strong>
+							<span class="name">[오리베] 골드러스트 너리싱 헤어 오일</span>
+							<span class="price">
+								<em>63,000원</em>
+								<span class="sale_price">70,050원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+						<span class="prd_img">	
+							<img src="http://image.sivillage.com/upload/C00001/goods/org/701/190807000380701.png?RS=270x270&SP=1&AR=0&BG=F7F7F7" alt="">
+						</span>
+						<span class="prd_info">
+							<strong class="brand">LA PERVA</strong>
+							<span class="name">[오리베] 시그니처 샴푸</span>
+							<span class="price">
+								<em>47,000원</em>	
+								<span class="sale_price">42,300원</span>
+							</span>
+						</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+	</main>
+	<footer id ="footer">
+		<div class="footer_notice">
+			<ul>
+				<li>
+					<em>
+						<a href="">공지</a>
+					</em>
+					<a href="">
+						[공지] 구매적립/리뷰작성 포인트 적립시기 변경안내
+					</a>	
+				</li>
+			</ul>	
+		</div>
+		<div class="footer_info">
+			<span class="ars">
+				고객센터
+				<strong>1644-4490</strong>
+			</span>
+			<span class="footer_tel">
+				<a class="tel" href="tel:1644-4490">
+					<em>통화연결</em>
+				</a>
+				<a class="kakao" href="">
+					<em>카톡상담하기</em>
+				</a>
+			</span>
+		</div>
+		<div class="footer">
+			<div class="sns">
+				<a href=""></a>
+				<a href=""></a>
+				<a href=""></a>
+			</div>  
+			<ul class="footer_nav">
+				<li><a href="">ABOUT</a></li>
+				<li><a href="">회사소개</a></li>
+				<li><a href="">매장안내</a></li>
+				<li><a href="">PC버전</a></li>
+			</ul>
+		</div>
+	</footer>
+	<div class="btn_top">
+		<a href="">
+			<img src="https://cdn-mo.sivillage.com/mo/images/common/btn_top.png" alt="">
+		</a>
+	</div>
+	<script>
+	window.addEventListener("scroll",function(){
+		if(pageYOffset > 500){
+			$('.btn_top').addClass('on')
+		}else{
+			$('.btn_top').removeClass('on')
+		}
+	})
+			$('.btn_top').click(function(e){
+				e.preventDefault();
+				$('html,body').animate({scrollTop:0},500)
+				
+			})
+		</script> 
+	<nav class="bt_nav">
+		<button class="lnb"></button>
+		<button class="trk"></button>
+		<button class="hom"></button>
+		<button class="myp"></button>
+		<button class="rct"></button>
+	</nav>
+ </body>
+</html>

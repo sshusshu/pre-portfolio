@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,900&display=swap" rel="stylesheet">
+  <title>Document</title>
+ <style>
+	.result{position: absolute;top: 50%;left: 50%;transform:translate(-50%,-50%);text-align: center;}
+	.ball{
+		width: 50px;
+		height: 50px;
+		border-radius:50%;
+		text-align: center;
+		line-height: 50px;
+		display: inline-block;
+		margin-left: 10px;
+		font-size: 1.5em;
+		font-weight: bold;
+		color:white;
+		text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+		box-shadow:inset 3px 3px 2px rgba(0,0,0,0.3);
+
+	}
+		h1{font-family: 'Raleway', sans-serif;font-size: 3em;color:#FF7D89;text-shadow:3px 3px 0 #89E1E8, -3px -3px 0 yellow}
+ </style>
+ </head>
+ <body>
+  
+  <div class="result">
+	<h1>LOTTO!</h1>
+  </div>
+ <script>
+	var result = document.querySelectorAll('.result')[0];
+
+	var numbers = Array(45).fill().map(function(a,index){
+		return index+1 });
+    var shuffles =[];
+	while(numbers.length > 0 ){
+		var num = numbers.splice(Math.floor(Math.random()*numbers.length),1)[0];
+		shuffles.push(num);
+	 }
+	var picks = shuffles.slice(0,6).sort(function(p,c){return p-c});
+	var bonus = shuffles[shuffles.length-1];
+console.log(shuffles, picks, bonus)	
+
+function ballColoring(cont){
+	  var ball = document.createElement('div');
+		  ball.classList.add('ball');
+		  ball.textContent = cont;
+		  result.append(ball);	
+			if(Number(ball.textContent) === Number(bonus)){
+				ball.style.background='#555';
+			}else if(ball.textContent <10){
+				ball.style.background='#FF7D89';
+			 }else if(ball.textContent <20){
+				ball.style.background='#E8C889';
+			 }else if(ball.textContent <30){
+				ball.style.background='#C9FFA3';
+			 }else if(ball.textContent <40){
+				ball.style.background='#89E1E8';
+			 }else{
+				ball.style.background='#BA8CFF';
+			 }
+
+		}
+
+
+		 setTimeout(function(){
+			ballColoring(picks[0])
+		 },1000)
+		  setTimeout(function(){
+			ballColoring(picks[1])
+		 },2000)
+		  setTimeout(function(){
+			ballColoring(picks[2])
+		 },3000)
+		  setTimeout(function(){
+			ballColoring(picks[3])
+		 },4000)
+		  setTimeout(function(){
+			ballColoring(picks[4])
+		 },5000)
+		  setTimeout(function(){
+			ballColoring(picks[5])
+		 },6000)
+		  setTimeout(function(){
+			ballColoring(bonus)
+		 },7000)
+		
+
+
+
+ </script>
+ </body>
+</html>

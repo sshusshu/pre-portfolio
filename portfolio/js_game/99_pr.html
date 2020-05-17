@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <title>Document</title>
+  <style>
+
+	.container{
+		position: absolute;
+		top:50%;left:50%;
+		transform:translate(-50%,-50%);
+	}
+	div{
+		text-align: center;
+		font-size: 1.5em;
+		font-family: 'Black Han Sans', sans-serif;
+	}
+	form{
+		width: 300px;
+	}
+	input{
+		width: 6em; 
+		height:1.4em;margin-top: -4%;
+		font-size: 1.4em;
+		margin-left: 6%;
+		border:none;
+		border-bottom:2px solid #000;
+		text-align: center;
+		vertical-align:middle;
+	}
+	input:focus{
+		outline: -webkit-focus-ring-color auto 0px;
+	}
+	button {
+		font-size: 1.2em;
+		background: lime;
+		border:none;
+		width:1.5em;
+		height:1.5em;
+		border-radius:50%;
+		color: #fff;
+		line-height: 1.4em;
+		font-weight: bold;
+		vertical-align:middle;
+	}
+	button.wrong{background: red;}
+   .result{width: 300px;height: 100px;margin-top: 20px;font-size: 1em; ;}
+
+  </style>
+ </head>
+ <body>
+  <!-- 
+    <div class="container">
+	  <div class="question"></div>
+		  <form>
+			  <input type="text">
+			  <button>제출</button> 
+		  </form>
+	  <div class='result'>결과창</div>
+	</div>
+
+  -->
+
+ <script>
+	var body = document.body;
+	var container = document.createElement('div');
+		body.append(container);
+		container.classList.add('container');
+	var question = document.createElement('div');
+		container.append(question);
+		question.classList.add('question');
+	var form = document.createElement('form');
+		container.append(form);
+	var answer = document.createElement('input');
+		form.append(answer);
+	var btn = document.createElement('button');
+	    btn.textContent=''
+		form.append(btn);
+    var result = document.createElement('div');
+		result.classList.add('result');
+	    container.append(result)
+
+
+	var num1= Math.ceil(Math.random()*9);
+	var num2= Math.ceil(Math.random()*9);
+		question.textContent= num1+" x "+num2+" ?"
+	var 맞은갯수 = 0;
+    var 열개 =0;
+		answer.focus();
+
+
+		form.addEventListener('submit',function(e){
+			e.preventDefault();
+			열개++
+			 if(열개<10){			
+					if(Number(answer.value) === num1*num2){
+						btn.classList.remove('wrong');
+						btn.textContent= 'O';
+						answer.value='';
+						answer.focus();
+						num1= Math.ceil(Math.random()*9);
+						num2= Math.ceil(Math.random()*9);
+						question.textContent= num1+" x "+num2+" ?";
+						맞은갯수++
+					}else{
+						btn.classList.add('wrong');
+						btn.textContent= 'X';
+						answer.value='';
+						answer.focus();
+					}
+				}else if(열개>=10){
+					
+					result.style.color='red'
+				}
+				console.log(열개)
+            result.textContent ='문제'+열개+ '. ' +' 100점/'+맞은갯수 * 10 +'점'
+
+		})
+
+		
+	
+
+ </script>
+ </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <title>Document</title>
+  <style>
+	.container{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform:translate(-50%,-50%);
+		text-align: center;
+	}	
+	.question span{
+		display: block;
+		font-size: 5em;
+		font-family: 'Nanum Pen Script', cursive;
+	}
+	form{width: 500px;}
+	input{
+		width: 6em; 
+		height:1.4em;margin-top: -4%;
+		font-size: 1.2em;
+		margin-left: 6%;
+		border:none;
+		border-bottom:2px solid #000;
+		text-align: center;
+		vertical-align:middle;
+	}
+	input:focus{
+		outline: -webkit-focus-ring-color auto 0px;
+	}
+	button {
+		font-size: 1.2em;
+		background: lime;
+		border:none;
+		width:1.5em;
+		height:1.5em;
+		border-radius:50%;
+		color: #fff;
+		line-height: 1.4em;
+		font-weight: bold;
+		vertical-align:middle;
+	}
+	.result{
+	margin-top: 10px;
+	font-family: 'Nanum Pen Script', cursive;
+	font-size: 2em;
+	}
+  </style>
+ </head>
+ <body>
+  <div class="container">
+	<div class="question">끝말잇기 제시어:<span class="word">에너지</span></div>
+	<form>
+		<input type="text">
+		<button></button>
+	</form>
+	<div class="result"></div>
+  </div>
+  <script>
+	var question = document.querySelectorAll('.word')[0];
+	var words = question.textContent;
+	var form = document.getElementsByTagName('form')[0];
+	var input = document.getElementsByTagName('input')[0];
+	var btn = document.getElementsByTagName('button')[0];
+	var result = document.querySelectorAll('.result')[0];
+
+	input.focus();
+
+	form.addEventListener('submit',function(e){
+	 e.preventDefault();
+	  
+		if(input.value.length > 1){ 
+			input.style.color='black';
+			  if(words[words.length-1] === input.value[0]){
+					btn.textContent='o';
+					btn.style.background='lime';	
+					words = input.value;
+					question.textContent = words;
+					var pre_words = document.createElement('span');
+					pre_words.textContent= words+' - ';
+					result.append(pre_words);
+			  }else{
+					btn.textContent='x';
+					btn.style.background='red';	
+			  }
+				input.value='';
+				input.focus();
+		  }else{
+			input.value ='두글자 이상'
+			input.style.color='red';
+			input.style.fontWeight='bold'
+			
+		  }
+	  })
+     
+  </script>
+ </body>
+</html>

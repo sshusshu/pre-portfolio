@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">  
+	<script src="https://kit.fontawesome.com/b07041031d.js" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+	.container{
+		font-family: 'Roboto', sans-serif;
+		font-size: 1.2em;
+		font-weight: 500;
+		line-height: 1.8em;	
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform:translate(-50%,-50%);
+		text-align: center;	
+	}
+	.question{
+		font-size: 1.6em;
+		margin-bottom: 30px;
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+	form{position: relative;}
+	input{
+		position: absolute;
+		top: 0;left: 30px;
+		font-size: 1.6em;
+		width: 220px;
+		letter-spacing:34px;
+		border:none;
+		background: transparent;
+		vertical-align:middle;
+	}
+	input:focus{outline: -webkit-focus-ring-color auto 0px;}
+	input ~ span{
+		display: inline-block;	
+		width: 40px;
+		height: 55px;
+		border:1px solid #999;
+		margin-left: 5px;
+		border-radius:4px;
+		margin-top: -13px;
+	}
+	button{
+		background: lime;
+		border:none;
+		width: 40px;
+		height: 40px;
+		vertical-align:top; 
+		border-radius:50%; 
+		color:#fff;
+		font-size: 1.2em;
+		z-index: 1;
+	}
+	.result{margin-top: 10px;text-align: left;}
+	.result span.win{font-size: 1.6em;font-weight: bold;color:hotpink;}
+	.result span{display: block;width:100%}
+
+  </style>
+  <title>Document</title>
+ </head>
+ <body>
+	 <div class="container">
+	 <div class="question">Guess 4 numbers</div>
+		 <form >
+			<input type="text" >
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			<button class="check"><i class="fas fa-check"></i></button>
+			<div class="result">
+				<span>strike:</span>
+				<span>ball:</span>
+				<span>chance: 10/</span>
+				<span></span>
+			</div>
+		 </form>
+	 </div>
+	 <script>
+	 
+		var input = document.getElementsByTagName('input')[0];
+		var btn = document.getElementsByTagName('button')[0];
+		var result = document.querySelectorAll('.result')[0];
+		var span = document.querySelectorAll('.result span');
+
+		var numbers;
+		var computer_num;
+		var shuffles ;
+
+function num_game(){
+		numbers = [0,1,2,3,4,5,6,7,8,9];
+		computer_num =[];
+		for (var i= 0 ; i<4 ;i++ ){	
+			 shuffles = numbers.splice(Math.ceil(Math.random()*(9-i)),1)[0]
+				computer_num.push(shuffles);
+		}
+
+			input.value='';
+			input.focus();
+			console.log(computer_num);
+}
+			num_game();
+			input.maxLength=4;
+
+		var wrong =0;
+		var form = document.getElementsByTagName('form')[0];
+			form.addEventListener('submit',function(e){
+				var strike=0;
+				var ball=0;
+				e.preventDefault();
+				if(wrong<10){
+					if(Number(input.value) === Number(computer_num.join(''))){//정답이면
+						for (var i=0;i<3;i++){
+							span[i].style.display='none';
+						}
+							span[3].textContent='WIN!!';
+							span[3].classList.add('win');
+						//초기화
+						setTimeout(function(){
+							wrong = 0;
+							span[3].classList.remove('win');
+							span[3].textContent='';
+							num_game();
+							for (var i=0;i<3;i++){
+							span[i].style.display='block';
+							}
+						},2000)
+					}else{//오답이면
+						for (var i = 0; i<4 ; i++ ){
+							if(Number(input.value[i])===Number(computer_num[i])){//스트라이크
+								strike ++
+							}else if(input.value.indexOf(Number(computer_num[i])) > -1){
+								ball++
+							}
+						}
+						span[0].textContent ='strike:'+ strike;
+						span[1].textContent ='ball:'+ ball;
+						span[2].textContent ='chance: 10/'+ Number(wrong+1);
+						input.value='';
+						input.focus();
+						wrong++
+					}	
+				}else{
+					btn.style.background='red';
+					btn.innerHTML='<i class="fas fa-times"></i>';
+					result.textContent='ANSWER: '+computer_num.join(',');
+					//초기화
+					wrong =0;
+					num_game();
+				}
+
+	
+console.log(wrong);
+
+   })
+
+	 </script>
+ </body>
+</html>

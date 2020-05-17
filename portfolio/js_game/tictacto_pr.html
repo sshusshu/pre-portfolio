@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+  <title>Document</title>
+ <style>
+.wrap{position:absolute;top: 30%;left: 50%;transform:translate(-50%,-50%)}
+td{
+	font-family: 'Baloo 2', cursive;
+	border:1px solid #dbdbdb;
+	border-radius:5px;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.5em;
+	color:white;
+	box-shadow:inset 3px 3px 0  rgba(0,0,0,0.2);
+  }
+  .result{height: 100px;font-size: 1.4em; font-weight: bold; text-align: center;line-height: 100px;}
+  .CodeMirror {
+    width: 50%;
+	height:40% !important;
+    position: absolute !important;
+    bottom: 10%;
+    left: 25%
+}
+
+@media (max-width:1024px){
+	#wrap {
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    transform: translate(0%,0%);
+	
+}
+	td { 
+		width: 120px;
+		height: 120px;
+	font-size: 4em;	
+	}
+.CodeMirror {
+    width: 100%;
+    position: absolute !important;
+    bottom: 0%;
+    left: 0%
+}
+
+  .result{font-size: 4em; }
+}
+ </style>
+ </head>
+ <body>
+<!-- 	<div id="wrap">
+  	  <table>
+  		<tr>
+  			<td></td>
+  			<td></td>
+  			<td></td>
+  		</tr>
+  		<tr>
+  			<td></td>
+  			<td></td>
+  			<td></td>
+  		</tr>
+  		<tr>
+  			<td></td>
+  			<td></td>
+  			<td></td>
+  		</tr>
+  	  </table>
+  	  <div class="result"></div>
+  </div> -->
+<textarea class="code">
+// 틱택토
+	let ox ='X'
+	let trIdx;
+	let tdIdx;
+	let win;
+
+	function test(){
+			 win = false;
+			//가로줄
+			if(td3[trIdx][0].textContent === ox &&
+			   td3[trIdx][1].textContent === ox &&
+			   td3[trIdx][2].textContent === ox ){
+			   win=true;
+			}
+			//세로줄
+			if(td3[0][tdIdx].textContent === ox &&
+			   td3[1][tdIdx].textContent === ox &&
+			   td3[2][tdIdx].textContent === ox ){
+			   win=true;
+			}
+			//대각선
+			if(td3[0][0].textContent === ox &&
+			   td3[1][1].textContent === ox &&
+			   td3[2][2].textContent === ox ){
+			   win=true;
+			}
+			if(td3[0][2].textContent === ox &&
+			   td3[1][1].textContent === ox &&
+			   td3[2][0].textContent === ox ){
+			   win=true;
+			}
+	}
+	function victory(tie){
+		if(tie){
+			result.textContent = 'tie';
+			}else{
+			result.textContent = ox +' win';
+			win=false;
+			//초기화
+			setTimeout(function(){
+				td3.forEach(function(tr){
+					tr.forEach(function(td){
+						td.textContent='';
+						td.style.background ='white'
+					})
+				})	
+				result.textContent = '';
+			},2000)
+			}
+	}
+
+	function 비동기콜백 (e){
+		e.preventDefault();
+		
+		if(e.target.textContent === ''){
+			//빈칸일때만
+			e.target.textContent = ox;
+			if(e.target.textContent === 'X'){
+				e.target.style.background='pink'
+			}
+			trIdx = tr3.indexOf(e.target.parentNode);
+			tdIdx = td3[trIdx].indexOf(e.target);
+			//승리검사
+			test();
+			//모든칸이 다 찼는가?
+			let emptyTd =[];
+					td3.forEach(function(tr){
+						tr.forEach(function(td){
+							emptyTd.push(td);
+						})
+					})
+				emptyTd = emptyTd.filter(function(td){return !td.textContent}) //'',0,NaN,undefined,null,false
+			if(win){
+					victory();
+			}else if(emptyTd.length ===0){
+					victory(true);
+			}else{
+					setTimeout(function(e){
+						ox='O'
+					//빈칸고르기
+					let selectTd = emptyTd [Math.floor(Math.random()*emptyTd.length)];
+					console.log(selectTd);
+					selectTd.textContent ='O';
+					selectTd.style.background='skyblue';
+					
+					trIdx = tr3.indexOf(selectTd.parentNode);
+					tdIdx = td3[trIdx].indexOf(selectTd);
+
+					//승리검사
+					test();
+					//승리하면
+					if(win){
+							victory();
+						}
+					//턴넘기기
+					ox = 'X'
+					},1000);
+			}
+		}else{
+			console.log('빈칸아님');
+		}
+	}
+
+	let tr3=[];
+	let td3=[];
+	let body = document.body;
+		let wrap = document.createElement('div');
+		wrap.classList.add('wrap')
+			let table = document.createElement('table');
+			   for (let i = 0; i<3 ; i++ ){ 
+				let tr = document.createElement('tr');
+				tr3.push(tr);
+				td3.push([]);
+					for (let j = 0; j<3 ; j++ ){
+					let td = document.createElement('td');
+					td3[i].push(td);
+					tr.appendChild(td);
+					td.addEventListener('click',비동기콜백);
+					}
+				table.appendChild(tr);
+			   }
+			 wrap.append(table);
+		   body.append(wrap);
+		let result = document.createElement('div');
+		result.classList.add('result');
+		wrap.append(result);
+
+</textarea>
+<script src="js/jquery.min_1.12.4.js"></script>
+<script src="js/codemirror.js"></script>
+<link rel="stylesheet" href="css/codemirror.css">
+<link rel="stylesheet" href="css/blackboard.css">
+<script src="js/javascript.js"></script>
+
+<script>
+ var code = $(".code")[0];
+ var editor = CodeMirror.fromTextArea(code, {
+	lineWrapping:true,
+    lineNumbers: true,
+	theme: "blackboard",
+	tabSize:6,
+  });
+//코드미러
+// 틱택토
+	let ox ='X'
+	let trIdx;
+	let tdIdx;
+	let win;
+
+	function test(){
+			 win = false;
+			//가로줄
+			if(td3[trIdx][0].textContent === ox &&
+			   td3[trIdx][1].textContent === ox &&
+			   td3[trIdx][2].textContent === ox ){
+			   win=true;
+			}
+			//세로줄
+			if(td3[0][tdIdx].textContent === ox &&
+			   td3[1][tdIdx].textContent === ox &&
+			   td3[2][tdIdx].textContent === ox ){
+			   win=true;
+			}
+			//대각선
+			if(td3[0][0].textContent === ox &&
+			   td3[1][1].textContent === ox &&
+			   td3[2][2].textContent === ox ){
+			   win=true;
+			}
+			if(td3[0][2].textContent === ox &&
+			   td3[1][1].textContent === ox &&
+			   td3[2][0].textContent === ox ){
+			   win=true;
+			}
+	}
+	function victory(tie){
+		if(tie){
+			result.textContent = 'tie';
+			}else{
+			result.textContent = ox +' win';
+			win=false;
+			//초기화
+			setTimeout(function(){
+				td3.forEach(function(tr){
+					tr.forEach(function(td){
+						td.textContent='';
+						td.style.background ='white'
+					})
+				})	
+				result.textContent = '';
+			},2000)
+			}
+	}
+
+	function 비동기콜백 (e){
+		e.preventDefault();
+		
+		if(e.target.textContent === ''){
+			//빈칸일때만
+			e.target.textContent = ox;
+			if(e.target.textContent === 'X'){
+				e.target.style.background='pink'
+			}
+			trIdx = tr3.indexOf(e.target.parentNode);
+			tdIdx = td3[trIdx].indexOf(e.target);
+			//승리검사
+			test();
+			//모든칸이 다 찼는가?
+			let emptyTd =[];
+					td3.forEach(function(tr){
+						tr.forEach(function(td){
+							emptyTd.push(td);
+						})
+					})
+				emptyTd = emptyTd.filter(function(td){return !td.textContent}) //'',0,NaN,undefined,null,false
+			if(win){
+					victory();
+			}else if(emptyTd.length ===0){
+					victory(true);
+			}else{
+					setTimeout(function(e){
+						ox='O'
+					//빈칸고르기
+					let selectTd = emptyTd [Math.floor(Math.random()*emptyTd.length)];
+					console.log(selectTd);
+					selectTd.textContent ='O';
+					selectTd.style.background='skyblue';
+					
+					trIdx = tr3.indexOf(selectTd.parentNode);
+					tdIdx = td3[trIdx].indexOf(selectTd);
+
+					//승리검사
+					test();
+					//승리하면
+					if(win){
+							victory();
+						}
+					//턴넘기기
+					ox = 'X'
+					},1000);
+			}
+		}else{
+			console.log('빈칸아님');
+		}
+	}
+
+	let tr3=[];
+	let td3=[];
+	let body = document.body;
+		let wrap = document.createElement('div');
+		wrap.classList.add('wrap')
+			let table = document.createElement('table');
+			   for (let i = 0; i<3 ; i++ ){ 
+				let tr = document.createElement('tr');
+				tr3.push(tr);
+				td3.push([]);
+					for (let j = 0; j<3 ; j++ ){
+					let td = document.createElement('td');
+					td3[i].push(td);
+					tr.appendChild(td);
+					td.addEventListener('click',비동기콜백);
+					}
+				table.appendChild(tr);
+			   }
+			 wrap.append(table);
+		   body.append(wrap);
+		let result = document.createElement('div');
+		result.classList.add('result');
+		wrap.append(result);
+
+	/* 
+	  var ox ='X';
+	  var tr3 = [];
+	  var td3 = [];
+
+		
+	function 비동기콜백(e){
+		e.preventDefault();
+		if(e.target.textContent === ''){// 빈칸일때만
+			 e.target.textContent= ox;
+			 var trIdx = tr3.indexOf(e.target.parentNode);
+			 var tdIdx = td3[trIdx].indexOf(e.target);
+			 var win = false;
+			 //가로줄
+			 if(td3[trIdx][0].textContent === ox &&
+				td3[trIdx][1].textContent === ox &&
+				td3[trIdx][2].textContent === ox ){
+				win = true;
+			 }
+			 //세로줄
+			 if(td3[0][tdIdx].textContent === ox &&
+				td3[1][tdIdx].textContent === ox &&
+				td3[2][tdIdx].textContent === ox ){
+				win = true;
+			 }
+			 //대각선
+			 if( td3[0][0].textContent === ox &&
+				 td3[1][1].textContent === ox &&
+				 td3[2][2].textContent === ox ){
+				win = true;
+			 }
+			 if(td3[0][2].textContent === ox &&
+				td3[1][1].textContent === ox &&
+				td3[2][0].textContent === ox ){
+				win = true;
+			 }
+
+			//승리 & 초기화
+			if(win){
+				result.textContent = ox+' win!'
+				setTimeout(function(){
+					td3.forEach(function(tr){
+						tr.forEach(function(td){
+							td.textContent='';
+							result.textContent ='';
+						})
+					})
+				},2000)
+			 }
+			// 턴 전환
+			 if(ox==='X'){
+				ox = 'O'
+			 }else{
+				ox = 'X'
+			 }
+		 }else{
+			console.log('빈칸이 아닙니다.')
+		 }
+	  }
+
+	var body = document.body;
+		var wrap = document.createElement('div');
+		wrap.classList.add('wrap')
+			var table = document.createElement('table') ;
+			for (var i = 0; i < 3 ; i++ ){
+				var tr = document.createElement('tr') ;
+				tr3.push(tr);
+				td3.push([]);
+				for (var j = 0 ; j<3 ; j++ ){
+					var td = document.createElement('td') ;
+					td3[i].push(td);
+					td.addEventListener('click',비동기콜백);
+					tr.appendChild(td);
+				}
+				table.appendChild(tr);
+			}
+			wrap.append(table);
+			var result= document.createElement('div') ;
+			result.classList.add('result')
+			wrap.append(result);
+		body.append(wrap);
+	*/
+
+
+
+	  </script>
+
+ 
+ </body>
+</html>

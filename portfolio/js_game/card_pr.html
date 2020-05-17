@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+    #wrap{width: 590px;}
+	.card{
+		display: inline-block;
+		width: 100px;
+		height: 150px;
+		margin: 10px;
+		perspective:300px;
+	}
+	.cardInner{
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		transition:transform 1s;
+		transform-style:preserve-3d;
+	}
+	.cardFront, .cardBack{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		backface-visibility:hidden;
+		border:1px solid #000;
+	}
+    .cardFront{
+		width: 100%;
+		height: 100%;
+		background: navy;
+	}
+	.flipped .cardInner {
+		transform:rotateY(180deg)
+	}
+	.cardBack{
+		transform:rotateY(180deg)
+	}
+  .CodeMirror {
+    width:40%;
+	height:552px !important;
+    position: absolute !important;
+    top:10px;
+    left: 600px
+}
+
+
+@media (max-width:1024px){
+	#wrap {
+    position: absolute;
+    top: 5%;
+    left: 0%;
+    transform: translate(0%,0%);
+	width: 100%;
+	
+}
+.card{
+		display: inline-block;
+		width: 200px;
+		height: 300px;
+		margin: 20px;
+		perspective:300px;
+	}
+.CodeMirror {
+    width: 100%;
+	height: none;
+    position: absolute !important;
+	top:auto;
+    bottom: 0%;
+    left: 0%
+}
+}	
+
+  </style>
+ </head>
+
+ <body>
+ <div id="wrap"></div>
+<textarea class="code">
+//카드 짝맞추기 게임
+	let hor =3;
+	let ver =4;
+	let colorCandi =['#FF614A','#FF614A', '#8E43E8','#8E43E8', '#56E5FF','#56E5FF', '#70E843','#70E843', '#FFCD4D','#FFCD4D','#F463FF','#F463FF'];
+	let color =[];
+	let clickFlag = true;
+	let clicked =[];
+	let complite =[];
+	let startTime;
+	let endTime;
+
+function shuffles(){
+	for (let j = 0; 0< colorCandi.length ; j++ ){
+		color = color.concat(colorCandi.splice(Math.floor(Math.random()*colorCandi.length),1))
+	}
+}
+
+	function cardSetting (ver,hor){
+		clickFlag = false;
+
+		let wrap = document.querySelector('#wrap')
+		for (let i = 0; i < ver*hor ; i++ ){
+		let card = document.createElement('div');
+			card.className='card';
+				let cardInner = document.createElement('div');
+				cardInner.className='cardInner';
+					let cardFront = document.createElement('div');
+					cardFront.className='cardFront';
+					cardInner.appendChild(cardFront);
+					let cardBack = document.createElement('div');
+					cardBack.className='cardBack';
+					cardBack.style.backgroundColor = color[i];
+					cardInner.appendChild(cardBack);
+				card.appendChild(cardInner);
+			
+			(function(c){
+				c.addEventListener('click',function(){	
+					
+					if(clickFlag && !complite.includes(c)){
+					c.classList.toggle('flipped');
+					clicked.push(c)
+					
+					if(clicked.length ===2){//두개같으면
+						if(clicked[0].querySelector('.cardBack').style.backgroundColor ===	clicked[1].querySelector('.cardBack').style.backgroundColor){
+							complite.push(clicked[0]);
+							complite.push(clicked[1]);
+							clicked=[];
+								console.log(complite.length)
+							if(complite.length===12){
+								console.log(complite.length)
+								endTime = new Date();
+								var time = (endTime - startTime)/1000
+								alert('축하합니다. 성공!' + time +'ms 걸렸습니다.');
+								document.querySelector('#wrap').innerHTML='';
+								complite=[];
+								colorCandi =['#FF614A','#FF614A', '#8E43E8','#8E43E8', '#56E5FF','#56E5FF', '#70E843','#70E843', '#FFCD4D','#FFCD4D','#F463FF','#F463FF'];
+								color =[];
+								startTime= null;
+								shuffles();
+								cardSetting(hor,ver);
+							}
+						}else{ //두개다르면
+							clickFlag=false;
+							setTimeout(function(){
+								clicked[0].classList.remove('flipped');
+								clicked[1].classList.remove('flipped');
+								clickFlag=true;
+								clicked =[];
+							},1000)
+						}
+					}
+					}
+				})	
+			})(card);
+			wrap.appendChild(card)	
+		}
+		document.body.appendChild(wrap);
+		document.querySelectorAll('.card').forEach(function(card,index){
+			setTimeout(function(){
+				card.classList.add('flipped');
+			},1000+100*index)
+		})
+		setTimeout(function(){
+			document.querySelectorAll('.card').forEach(function(card){
+				card.classList.remove('flipped')
+			})
+			clickFlag = true;
+			},5000)
+		startTime = new Date();
+	}
+	shuffles();
+	cardSetting(hor,ver);
+</textarea>
+<script src="js/jquery.min_1.12.4.js"></script>
+<script src="js/codemirror.js"></script>
+<link rel="stylesheet" href="css/codemirror.css">
+<link rel="stylesheet" href="css/blackboard.css">
+<script src="js/javascript.js"></script>
+
+<script>
+ var code = $(".code")[0];
+ var editor = CodeMirror.fromTextArea(code, {
+	lineWrapping:true,
+    lineNumbers: true,
+	theme: "blackboard",
+	tabSize:6,
+  });
+//카드 짝맞추기 게임
+	let hor =3;
+	let ver =4;
+	let colorCandi =['#FF614A','#FF614A', '#8E43E8','#8E43E8', '#56E5FF','#56E5FF', '#70E843','#70E843', '#FFCD4D','#FFCD4D','#F463FF','#F463FF'];
+	let color =[];
+	let clickFlag = true;
+	let clicked =[];
+	let complite =[];
+	let startTime;
+	let endTime;
+
+function shuffles(){
+	for (let j = 0; 0< colorCandi.length ; j++ ){
+		color = color.concat(colorCandi.splice(Math.floor(Math.random()*colorCandi.length),1))
+	}
+}
+
+	function cardSetting (ver,hor){
+		clickFlag = false;
+
+		let wrap = document.querySelector('#wrap')
+		for (let i = 0; i < ver*hor ; i++ ){
+		let card = document.createElement('div');
+			card.className='card';
+				let cardInner = document.createElement('div');
+				cardInner.className='cardInner';
+					let cardFront = document.createElement('div');
+					cardFront.className='cardFront';
+					cardInner.appendChild(cardFront);
+					let cardBack = document.createElement('div');
+					cardBack.className='cardBack';
+					cardBack.style.backgroundColor = color[i];
+					cardInner.appendChild(cardBack);
+				card.appendChild(cardInner);
+			
+			(function(c){
+				c.addEventListener('click',function(){	
+					
+					if(clickFlag && !complite.includes(c)){
+					c.classList.toggle('flipped');
+					clicked.push(c)
+					
+					if(clicked.length ===2){//두개같으면
+						if(clicked[0].querySelector('.cardBack').style.backgroundColor ===	clicked[1].querySelector('.cardBack').style.backgroundColor){
+							complite.push(clicked[0]);
+							complite.push(clicked[1]);
+							clicked=[];
+								console.log(complite.length)
+							if(complite.length===12){
+								console.log(complite.length)
+								endTime = new Date();
+								var time = (endTime - startTime)/1000
+								alert('축하합니다. 성공!' + time +'ms 걸렸습니다.');
+								document.querySelector('#wrap').innerHTML='';
+								complite=[];
+								colorCandi =['#FF614A','#FF614A', '#8E43E8','#8E43E8', '#56E5FF','#56E5FF', '#70E843','#70E843', '#FFCD4D','#FFCD4D','#F463FF','#F463FF'];
+								color =[];
+								startTime= null;
+								shuffles();
+								cardSetting(hor,ver);
+							}
+						}else{ //두개다르면
+							clickFlag=false;
+							setTimeout(function(){
+								clicked[0].classList.remove('flipped');
+								clicked[1].classList.remove('flipped');
+								clickFlag=true;
+								clicked =[];
+							},1000)
+						}
+					}
+					}
+				})	
+			})(card);
+			wrap.appendChild(card)	
+		}
+		document.body.appendChild(wrap);
+		document.querySelectorAll('.card').forEach(function(card,index){
+			setTimeout(function(){
+				card.classList.add('flipped');
+			},1000+100*index)
+		})
+		setTimeout(function(){
+			document.querySelectorAll('.card').forEach(function(card){
+				card.classList.remove('flipped')
+			})
+			clickFlag = true;
+			},5000)
+		startTime = new Date();
+	}
+	shuffles();
+	cardSetting(hor,ver);
+  </script>
+ </body>
+</html>
